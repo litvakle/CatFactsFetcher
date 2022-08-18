@@ -17,12 +17,12 @@ public final class CatFactsNinjaFetcher {
     let client: HTTPClient
     let url: URL
     
-    public typealias Result = Swift.Result<CatFact, Error>
-
-    public enum Error: Swift.Error {
+    public enum FetchError: Swift.Error {
         case connectivity
         case invalidData
     }
+
+    public typealias Result = Swift.Result<CatFact, Error>
     
     public init(client: HTTPClient, url: URL) {
         self.client = client
@@ -31,28 +31,40 @@ public final class CatFactsNinjaFetcher {
     
     public func fetch(_ completion: @escaping((Result) -> Void)) {
         client.fetch(from: url) { [weak self] result in
-            guard self != nil else { return }
+            guard let self = self else { return }
             switch result {
             case let .success((data, response)):
-                guard response.statusCode == 200 else {
-                    completion(.failure(.invalidData))
-                    return
-                }
-                
-                guard let decoded = try? JSONDecoder().decode(ApiFact.self, from: data) else {
-                    completion(.failure(.invalidData))
-                    return
-                }
-                    
-                completion(.success(decoded.toModel()))
-            case .failure(_):
-                completion(.failure(.connectivity))
+                completion(self.map(from: data, with: response))
+            case .failure:
+                completion(.failure(FetchError.connectivity))
             }
+        }
+    }
+    
+    private func map(from data: Data, with response: HTTPURLResponse) -> Result {
+        do {
+            let fact = try CatFactsMapper.map(from: data, with: response)
+            return .success(fact.toModel())
+        } catch(let error) {
+            return .failure(error)
         }
     }
 }
 
-private struct ApiFact: Decodable {
+final class CatFactsMapper {
+    static var OK_200: Int { return 200 }
+    
+    static func map(from data: Data, with response: HTTPURLResponse) throws -> ApiFact {
+        guard response.statusCode == OK_200,
+              let decoded = try? JSONDecoder().decode(ApiFact.self, from: data) else {
+            throw CatFactsNinjaFetcher.FetchError.invalidData
+        }
+        
+        return decoded
+    }
+}
+
+struct ApiFact: Decodable {
     let fact: String
     let length: Int
     
