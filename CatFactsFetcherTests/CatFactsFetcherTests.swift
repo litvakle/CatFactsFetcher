@@ -67,7 +67,7 @@ class CatFactsFetcherTests: XCTestCase {
         }
     }
     
-    func test_fetch_deliversErrorOn200HTTPURLResponsWithInvalidData() {
+    func test_fetch_deliversErrorOn200HTTPURLResponseWithInvalidData() {
         let (sut, client) = makeSUT()
         
         let exp = expectation(description: "Waiting for fetch completion")
