@@ -7,6 +7,8 @@
 
 import Foundation
 
+/// A service for fetching random facts about cats using free 'Ninja' API https://catfact.ninja
+/// The service uses default URL or required URL can be passed as a parameter to init()
 public final class CatFactsNinjaFetcher: CatFactsFetcher {
     let client: HTTPClient
     let url: URL
