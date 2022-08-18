@@ -23,6 +23,7 @@ class URLSessionHTTPClientTests: XCTestCase {
     }
     
     func test_fetch_performsGetRequestWithURL() {
+        let sut = URLSessionHTTPClient()
         let url = anyURL()
         let exp = expectation(description: "Wait for request")
         
@@ -32,8 +33,30 @@ class URLSessionHTTPClientTests: XCTestCase {
             exp.fulfill()
         }
         
-        let sut = URLSessionHTTPClient()
         sut.fetch(from: url) { _ in }
+        
+        wait(for: [exp], timeout: 1.0)
+    }
+    
+    func test_fetch_failsOnRequestError() {
+        let sut = URLSessionHTTPClient()
+        let url = anyURL()
+        let exp = expectation(description: "Wait for request")
+        
+        URLProtocolStub.stub(data: nil, response: nil, error: anyNSError())
+        
+        let expectedError = anyNSError()
+        sut.fetch(from: url) { result in
+            switch result {
+            case .success:
+                XCTFail("Expected failure, got \(result) instead")
+            case let .failure(receivedError as NSError):
+                XCTAssertEqual(receivedError.code, expectedError.code)
+                XCTAssertEqual(receivedError.domain, expectedError.domain)
+            }
+            
+            exp.fulfill()
+        }
         
         wait(for: [exp], timeout: 1.0)
     }
@@ -42,6 +65,10 @@ class URLSessionHTTPClientTests: XCTestCase {
 
     private func anyURL() -> URL {
         return URL(string: "http://any-url.com")!
+    }
+    
+    private func anyNSError() -> NSError {
+        return NSError(domain: "Any error", code: 0)
     }
     
     private class URLProtocolStub: URLProtocol {

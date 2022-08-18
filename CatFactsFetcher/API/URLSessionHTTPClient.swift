@@ -11,8 +11,10 @@ public final class URLSessionHTTPClient: HTTPClient {
     public init() {}
     
     public func fetch(from url: URL, _ completion: @escaping (HTTPClient.Result) -> Void) {
-        URLSession.shared.dataTask(with: url) { _, _, _ in
-            
+        URLSession.shared.dataTask(with: url) { _, _, error in
+            if let error = error {
+                completion(.failure(error))
+            }
         }
         .resume()
     }
