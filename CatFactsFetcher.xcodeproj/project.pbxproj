@@ -11,6 +11,7 @@
 		3A8644CC28ADF2AC0031A98E /* CatFactsFetcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8644CB28ADF2AC0031A98E /* CatFactsFetcherTests.swift */; };
 		3A8644D728AE059E0031A98E /* CatFactsNinjaFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8644D628AE059E0031A98E /* CatFactsNinjaFetcher.swift */; };
 		3A8644D928AE18880031A98E /* CatFact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8644D828AE18880031A98E /* CatFact.swift */; };
+		3A8EC29928AE302F00453419 /* CatFactsMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8EC29828AE302F00453419 /* CatFactsMapper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +30,7 @@
 		3A8644CB28ADF2AC0031A98E /* CatFactsFetcherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatFactsFetcherTests.swift; sourceTree = "<group>"; };
 		3A8644D628AE059E0031A98E /* CatFactsNinjaFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatFactsNinjaFetcher.swift; sourceTree = "<group>"; };
 		3A8644D828AE18880031A98E /* CatFact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatFact.swift; sourceTree = "<group>"; };
+		3A8EC29828AE302F00453419 /* CatFactsMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatFactsMapper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +74,7 @@
 			isa = PBXGroup;
 			children = (
 				3A8644D628AE059E0031A98E /* CatFactsNinjaFetcher.swift */,
+				3A8EC29828AE302F00453419 /* CatFactsMapper.swift */,
 				3A8644D828AE18880031A98E /* CatFact.swift */,
 			);
 			path = CatFactsFetcher;
@@ -195,6 +198,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3A8644D928AE18880031A98E /* CatFact.swift in Sources */,
+				3A8EC29928AE302F00453419 /* CatFactsMapper.swift in Sources */,
 				3A8644D728AE059E0031A98E /* CatFactsNinjaFetcher.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
