@@ -11,15 +11,14 @@ import CatFactsFetcher
 
 class CatFactsFetcherTests: XCTestCase {
     func test_init_doesNotRequestDataFromURL() {
-        let client = HTTPClientSpy()
+        let (_, client) = makeSUT()
         
         XCTAssertTrue(client.requestedURLs.isEmpty)
     }
     
     func test_fetch_requestsDataFromURL() {
-        let client = HTTPClientSpy()
-        let url = URL(string: "http://any-url.com")!
-        let sut = CatFactsNinjaFetcher(client: client, url: url)
+        let url = URL(string: "http://specific-url.com")!
+        let (sut, client) = makeSUT(url: url)
         
         sut.fetch() { _ in }
         
@@ -27,9 +26,7 @@ class CatFactsFetcherTests: XCTestCase {
     }
     
     func test_fetch_deliversErrorOnClientError() {
-        let client = HTTPClientSpy()
-        let url = URL(string: "http://any-url.com")!
-        let sut = CatFactsNinjaFetcher(client: client, url: url)
+        let (sut, client) = makeSUT()
         
         let expectedError = NSError(domain: "any error", code: 1)
         let exp = expectation(description: "Waiting for fetch completion")
@@ -47,6 +44,14 @@ class CatFactsFetcherTests: XCTestCase {
         client.complete(withError: expectedError)
         
         wait(for: [exp], timeout: 1.0)
+    }
+    
+    // MARK: - Helpers
+    private func makeSUT(url: URL = URL(string: "http://any-url.com")!) -> (sut: CatFactsNinjaFetcher, client: HTTPClientSpy) {
+        let client = HTTPClientSpy()
+        let sut = CatFactsNinjaFetcher(client: client, url: url)
+        
+        return (sut, client)
     }
 }
 
