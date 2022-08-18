@@ -28,7 +28,7 @@ class CatFactsFetcherTests: XCTestCase {
     func test_fetch_deliversErrorOnClientError() {
         let (sut, client) = makeSUT()
         
-        expect(sut, toCompleteWith: .failure(CatFactsNinjaFetcher.FetchError.connectivity), when: {
+        expect(sut, toCompleteWith: .failure(CatFactsNinjaFetcher.Error.connectivity), when: {
             client.complete(withError: anyNSError())
         })
     }
@@ -38,7 +38,7 @@ class CatFactsFetcherTests: XCTestCase {
         
         let statusCodes = [199, 201, 300, 400, 500]
         statusCodes.enumerated().forEach { (index, code) in
-            expect(sut, toCompleteWith: .failure(CatFactsNinjaFetcher.FetchError.invalidData), when: {
+            expect(sut, toCompleteWith: .failure(CatFactsNinjaFetcher.Error.invalidData), when: {
                 client.complete(withStatusCode: code, data: Data(), at: index)
             })
         }
@@ -47,7 +47,7 @@ class CatFactsFetcherTests: XCTestCase {
     func test_fetch_deliversErrorOn200HTTPURLResponseWithInvalidData() {
         let (sut, client) = makeSUT()
         
-        expect(sut, toCompleteWith: .failure(CatFactsNinjaFetcher.FetchError.invalidData), when: {
+        expect(sut, toCompleteWith: .failure(CatFactsNinjaFetcher.Error.invalidData), when: {
             let invalidJSON = Data("invalid json".utf8)
             client.complete(withStatusCode: 200, data: invalidJSON)
         })
@@ -117,7 +117,7 @@ class CatFactsFetcherTests: XCTestCase {
             switch (receivedResult, expectedResult) {
             case let (.success(receivedFact), .success(expectedFact)):
                 XCTAssertEqual(receivedFact, expectedFact, file: file, line: line)
-            case let (.failure(receivedError as CatFactsNinjaFetcher.FetchError), .failure(expectedError as CatFactsNinjaFetcher.FetchError)):
+            case let (.failure(receivedError as CatFactsNinjaFetcher.Error), .failure(expectedError as CatFactsNinjaFetcher.Error)):
                 XCTAssertEqual(receivedError, expectedError, file: file, line: line)
             default:
                 XCTFail("Expected result \(expectedResult), got \(receivedResult) instead", file: file, line: line)

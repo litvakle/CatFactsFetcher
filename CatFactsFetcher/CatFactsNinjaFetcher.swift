@@ -13,16 +13,16 @@ public protocol HTTPClient {
     func fetch(from url: URL, _ completion: @escaping (Result) -> Void)
 }
 
-public final class CatFactsNinjaFetcher {
+public final class CatFactsNinjaFetcher: CatFactsFetcher {
     let client: HTTPClient
     let url: URL
     
-    public enum FetchError: Swift.Error {
+    public enum Error: Swift.Error {
         case connectivity
         case invalidData
     }
 
-    public typealias Result = Swift.Result<CatFact, Error>
+    public typealias Result = CatFactsFetcher.Result
     
     public init(client: HTTPClient, url: URL) {
         self.client = client
@@ -36,7 +36,7 @@ public final class CatFactsNinjaFetcher {
             case let .success((data, response)):
                 completion(self.map(from: data, with: response))
             case .failure:
-                completion(.failure(FetchError.connectivity))
+                completion(.failure(Error.connectivity))
             }
         }
     }
@@ -48,14 +48,5 @@ public final class CatFactsNinjaFetcher {
         } catch(let error) {
             return .failure(error)
         }
-    }
-}
-
-struct ApiFact: Decodable {
-    let fact: String
-    let length: Int
-    
-    func toModel() -> CatFact {
-        return CatFact(text: fact)
     }
 }
