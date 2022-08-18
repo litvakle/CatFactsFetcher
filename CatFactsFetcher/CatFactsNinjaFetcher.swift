@@ -38,10 +38,20 @@ public final class CatFactsNinjaFetcher {
                     return
                 }
                 
+                guard let _ = try? JSONDecoder().decode(ApiFact.self, from: data) else {
+                    completion(.failure(.invalidData))
+                    return
+                }
+                    
                 completion(.success(data))
             case .failure(_):
                 completion(.failure(.connectivity))
             }
         }
+    }
+    
+    private struct ApiFact: Decodable {
+        let fact: String
+        let lenght: Int
     }
 }

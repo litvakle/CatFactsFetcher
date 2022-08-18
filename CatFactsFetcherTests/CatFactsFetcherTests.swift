@@ -61,10 +61,30 @@ class CatFactsFetcherTests: XCTestCase {
                 exp.fulfill()
             }
             
-            client.complete(withStatusCode: code, at: index)
+            client.complete(withStatusCode: code, data: Data(), at: index)
             
             wait(for: [exp], timeout: 1.0)
         }
+    }
+    
+    func test_fetch_deliversErrorOn200HTTPURLResponsWithInvalidData() {
+        let (sut, client) = makeSUT()
+        
+        let exp = expectation(description: "Waiting for fetch completion")
+        sut.fetch { result in
+            switch result {
+            case .success:
+                XCTFail("Expected failure, received \(result) instead)")
+            case let .failure(error):
+                XCTAssertEqual(error, .invalidData)
+            }
+            exp.fulfill()
+        }
+        
+        let invalidJSON = Data("invalid json".utf8)
+        client.complete(withStatusCode: 200, data: invalidJSON)
+        
+        wait(for: [exp], timeout: 1.0)
     }
     
     // MARK: - Helpers
@@ -89,7 +109,7 @@ private class HTTPClientSpy: HTTPClient {
         completions[index](.failure(error))
     }
     
-    func complete(withStatusCode code: Int, at index: Int = 0) {
+    func complete(withStatusCode code: Int, data: Data, at index: Int = 0) {
         let response = HTTPURLResponse(
             url: requestedURLs[index],
             statusCode: code,
