@@ -8,7 +8,7 @@
 import Foundation
 
 public protocol HTTPClient {
-    typealias Result = Swift.Result<Data, Error>
+    typealias Result = Swift.Result<(Data, HTTPURLResponse), Error>
     
     func fetch(from url: URL, _ completion: @escaping (Result) -> Void)
 }
@@ -18,6 +18,11 @@ public final class CatFactsNinjaFetcher {
     let url: URL
     
     public typealias Result = Swift.Result<Data, Error>
+
+    public enum Error: Swift.Error {
+        case connectivity
+        case invalidData
+    }
     
     public init(client: HTTPClient, url: URL) {
         self.client = client
@@ -26,8 +31,16 @@ public final class CatFactsNinjaFetcher {
     
     public func fetch(_ completion: @escaping((Result) -> Void)) {
         client.fetch(from: url) { result in
-            if case let .failure(error) = result {
-                completion(.failure(error))
+            switch result {
+            case let .success((data, response)):
+                guard response.statusCode == 200 else {
+                    completion(.failure(.invalidData))
+                    return
+                }
+                
+                completion(.success(data))
+            case .failure(_):
+                completion(.failure(.connectivity))
             }
         }
     }

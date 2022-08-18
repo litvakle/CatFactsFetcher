@@ -33,10 +33,9 @@ class CatFactsFetcherTests: XCTestCase {
         sut.fetch { result in
             switch result {
             case .success:
-                XCTFail("Expected filure, received \(result) instead)")
-            case let .failure(error as NSError):
-                XCTAssertEqual(error.code, expectedError.code)
-                XCTAssertEqual(error.domain, expectedError.domain)
+                XCTFail("Expected failure, received \(result) instead)")
+            case let .failure(error):
+                XCTAssertEqual(error, .connectivity)
             }
             exp.fulfill()
         }
@@ -44,6 +43,28 @@ class CatFactsFetcherTests: XCTestCase {
         client.complete(withError: expectedError)
         
         wait(for: [exp], timeout: 1.0)
+    }
+    
+    func test_fetch_deliversErrorOnNon200HTTPResponse() {
+        let (sut, client) = makeSUT()
+        
+        let statusCodes = [199, 201, 300, 400, 500]
+        statusCodes.enumerated().forEach { (index, code) in
+            let exp = expectation(description: "Waiting for fetch completion")
+            sut.fetch { result in
+                switch result {
+                case .success:
+                    XCTFail("Expected failure, received \(result) instead)")
+                case let .failure(receivedError):
+                    XCTAssertEqual(receivedError, .invalidData)
+                }
+                exp.fulfill()
+            }
+            
+            client.complete(withStatusCode: code, at: index)
+            
+            wait(for: [exp], timeout: 1.0)
+        }
     }
     
     // MARK: - Helpers
@@ -66,5 +87,16 @@ private class HTTPClientSpy: HTTPClient {
     
     func complete(withError error: Error, at index: Int = 0) {
         completions[index](.failure(error))
+    }
+    
+    func complete(withStatusCode code: Int, at index: Int = 0) {
+        let response = HTTPURLResponse(
+            url: requestedURLs[index],
+            statusCode: code,
+            httpVersion: nil,
+            headerFields: nil
+        )!
+        
+        completions[index](.success((Data(), response)))
     }
 }
