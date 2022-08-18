@@ -13,6 +13,7 @@
 		3A8644D928AE18880031A98E /* CatFact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8644D828AE18880031A98E /* CatFact.swift */; };
 		3A8EC29928AE302F00453419 /* CatFactsMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8EC29828AE302F00453419 /* CatFactsMapper.swift */; };
 		3A8EC29B28AE333600453419 /* CatFactsFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8EC29A28AE333600453419 /* CatFactsFetcher.swift */; };
+		3A8EC29D28AE347C00453419 /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8EC29C28AE347C00453419 /* HTTPClient.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,6 +34,7 @@
 		3A8644D828AE18880031A98E /* CatFact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatFact.swift; sourceTree = "<group>"; };
 		3A8EC29828AE302F00453419 /* CatFactsMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatFactsMapper.swift; sourceTree = "<group>"; };
 		3A8EC29A28AE333600453419 /* CatFactsFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatFactsFetcher.swift; sourceTree = "<group>"; };
+		3A8EC29C28AE347C00453419 /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,10 +77,8 @@
 		3A8644C028ADF2AC0031A98E /* CatFactsFetcher */ = {
 			isa = PBXGroup;
 			children = (
-				3A8644D628AE059E0031A98E /* CatFactsNinjaFetcher.swift */,
-				3A8EC29A28AE333600453419 /* CatFactsFetcher.swift */,
-				3A8EC29828AE302F00453419 /* CatFactsMapper.swift */,
-				3A8644D828AE18880031A98E /* CatFact.swift */,
+				3A8EC29E28AE349700453419 /* Cat Fact */,
+				3A8EC29F28AE34A400453419 /* API */,
 			);
 			path = CatFactsFetcher;
 			sourceTree = "<group>";
@@ -89,6 +89,25 @@
 				3A8644CB28ADF2AC0031A98E /* CatFactsFetcherTests.swift */,
 			);
 			path = CatFactsFetcherTests;
+			sourceTree = "<group>";
+		};
+		3A8EC29E28AE349700453419 /* Cat Fact */ = {
+			isa = PBXGroup;
+			children = (
+				3A8644D828AE18880031A98E /* CatFact.swift */,
+			);
+			path = "Cat Fact";
+			sourceTree = "<group>";
+		};
+		3A8EC29F28AE34A400453419 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				3A8EC29A28AE333600453419 /* CatFactsFetcher.swift */,
+				3A8644D628AE059E0031A98E /* CatFactsNinjaFetcher.swift */,
+				3A8EC29828AE302F00453419 /* CatFactsMapper.swift */,
+				3A8EC29C28AE347C00453419 /* HTTPClient.swift */,
+			);
+			path = API;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -201,6 +220,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3A8644D928AE18880031A98E /* CatFact.swift in Sources */,
+				3A8EC29D28AE347C00453419 /* HTTPClient.swift in Sources */,
 				3A8EC29928AE302F00453419 /* CatFactsMapper.swift in Sources */,
 				3A8EC29B28AE333600453419 /* CatFactsFetcher.swift in Sources */,
 				3A8644D728AE059E0031A98E /* CatFactsNinjaFetcher.swift in Sources */,

@@ -7,12 +7,6 @@
 
 import Foundation
 
-public protocol HTTPClient {
-    typealias Result = Swift.Result<(Data, HTTPURLResponse), Error>
-    
-    func fetch(from url: URL, _ completion: @escaping (Result) -> Void)
-}
-
 public final class CatFactsNinjaFetcher: CatFactsFetcher {
     let client: HTTPClient
     let url: URL
