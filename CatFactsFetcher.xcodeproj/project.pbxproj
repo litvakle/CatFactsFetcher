@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		3A8644C728ADF2AC0031A98E /* CatFactsFetcher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A8644BE28ADF2AC0031A98E /* CatFactsFetcher.framework */; };
 		3A8644CC28ADF2AC0031A98E /* CatFactsFetcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8644CB28ADF2AC0031A98E /* CatFactsFetcherTests.swift */; };
+		3A8644D728AE059E0031A98E /* CatFactsNinjaFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8644D628AE059E0031A98E /* CatFactsNinjaFetcher.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -25,6 +26,7 @@
 		3A8644BE28ADF2AC0031A98E /* CatFactsFetcher.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CatFactsFetcher.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A8644C628ADF2AC0031A98E /* CatFactsFetcherTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CatFactsFetcherTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A8644CB28ADF2AC0031A98E /* CatFactsFetcherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatFactsFetcherTests.swift; sourceTree = "<group>"; };
+		3A8644D628AE059E0031A98E /* CatFactsNinjaFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatFactsNinjaFetcher.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +69,7 @@
 		3A8644C028ADF2AC0031A98E /* CatFactsFetcher */ = {
 			isa = PBXGroup;
 			children = (
+				3A8644D628AE059E0031A98E /* CatFactsNinjaFetcher.swift */,
 			);
 			path = CatFactsFetcher;
 			sourceTree = "<group>";
@@ -140,6 +143,7 @@
 				TargetAttributes = {
 					3A8644BD28ADF2AC0031A98E = {
 						CreatedOnToolsVersion = 13.4;
+						LastSwiftMigration = 1340;
 					};
 					3A8644C528ADF2AC0031A98E = {
 						CreatedOnToolsVersion = 13.4;
@@ -187,6 +191,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A8644D728AE059E0031A98E /* CatFactsNinjaFetcher.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -331,6 +336,7 @@
 		3A8644D128ADF2AC0031A98E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -352,6 +358,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -359,6 +366,7 @@
 		3A8644D228ADF2AC0031A98E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -387,6 +395,7 @@
 		3A8644D428ADF2AC0031A98E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 836WWF38RW;
@@ -402,6 +411,7 @@
 		3A8644D528ADF2AC0031A98E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 836WWF38RW;
