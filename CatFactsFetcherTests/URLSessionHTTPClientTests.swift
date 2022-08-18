@@ -23,7 +23,6 @@ class URLSessionHTTPClientTests: XCTestCase {
     }
     
     func test_fetch_performsGetRequestWithURL() {
-        let sut = URLSessionHTTPClient()
         let url = anyURL()
         let exp = expectation(description: "Wait for request")
         
@@ -33,32 +32,17 @@ class URLSessionHTTPClientTests: XCTestCase {
             exp.fulfill()
         }
         
-        sut.fetch(from: url) { _ in }
+        makeSUT().fetch(from: url) { _ in }
         
         wait(for: [exp], timeout: 1.0)
     }
     
     func test_fetch_failsOnRequestError() {
-        let sut = URLSessionHTTPClient()
-        let url = anyURL()
-        let exp = expectation(description: "Wait for request")
+        let requestError = anyNSError()
+        let receivedError = resultError(data: nil, response: nil, error: requestError) as? NSError
         
-        URLProtocolStub.stub(data: nil, response: nil, error: anyNSError())
-        
-        let expectedError = anyNSError()
-        sut.fetch(from: url) { result in
-            switch result {
-            case .success:
-                XCTFail("Expected failure, got \(result) instead")
-            case let .failure(receivedError as NSError):
-                XCTAssertEqual(receivedError.code, expectedError.code)
-                XCTAssertEqual(receivedError.domain, expectedError.domain)
-            }
-            
-            exp.fulfill()
-        }
-        
-        wait(for: [exp], timeout: 1.0)
+        XCTAssertEqual(receivedError?.domain, requestError.domain)
+        XCTAssertEqual(receivedError?.code, requestError.code)
     }
     
     func test_fetch_failsOnAllInvalidRepresentationCases() {
@@ -97,6 +81,14 @@ class URLSessionHTTPClientTests: XCTestCase {
     
     // MARK: - Helpers
 
+    private func makeSUT(file: StaticString = #file, line: UInt = #line) -> HTTPClient {
+        let sut = URLSessionHTTPClient()
+        
+        trackForMemoryLeaks(sut, file: file, line: line)
+        
+        return sut
+    }
+    
     private func anyURL() -> URL {
         return URL(string: "http://any-url.com")!
     }
@@ -142,11 +134,12 @@ class URLSessionHTTPClientTests: XCTestCase {
     }
     
     private func resultFor(data: Data?, response: URLResponse?, error: Error?, file: StaticString = #file, line: UInt = #line) -> HTTPClient.Result {
-        let sut = URLSessionHTTPClient()
+        URLProtocolStub.stub(data: data, response: response, error: error)
+
+        let sut = makeSUT(file: file, line: line)
         let url = anyURL()
         let exp = expectation(description: "Wait for request")
         
-        URLProtocolStub.stub(data: data, response: response, error: error)
         
         var receivedResult: HTTPClient.Result!
         sut.fetch(from: url) { result in
@@ -157,6 +150,12 @@ class URLSessionHTTPClientTests: XCTestCase {
         wait(for: [exp], timeout: 1.0)
         
         return receivedResult
+    }
+    
+    private func trackForMemoryLeaks(_ instance: AnyObject, file: StaticString = #file, line: UInt = #line) {
+        addTeardownBlock { [weak instance] in
+            XCTAssertNil(instance, "Instance should have been deallocated. Potential memory leak.", file: file, line: line)
+        }
     }
     
     private class URLProtocolStub: URLProtocol {
