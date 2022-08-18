@@ -20,7 +20,7 @@ public final class CatFactsNinjaFetcher: CatFactsFetcher {
     
     private let defaultURL = URL(string: "https://catfact.ninja/fact")!
     
-    public init(client: HTTPClient, url: URL?) {
+    public init(client: HTTPClient, url: URL? = nil) {
         self.client = client
         self.url = url ?? defaultURL
     }

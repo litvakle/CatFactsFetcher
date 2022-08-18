@@ -18,10 +18,19 @@
 		3A8EC2A328AE390800453419 /* URLSessionHTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8EC2A228AE390800453419 /* URLSessionHTTPClient.swift */; };
 		3A8EC2A628AE41BA00453419 /* XCTest+MemoryLeaksTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8EC2A528AE41BA00453419 /* XCTest+MemoryLeaksTracking.swift */; };
 		3A8EC2A828AE41FF00453419 /* SharedTestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8EC2A728AE41FF00453419 /* SharedTestHelpers.swift */; };
+		3A8EC2B028AE639B00453419 /* CatFactsFetcherEndToEndTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8EC2AF28AE639B00453419 /* CatFactsFetcherEndToEndTests.swift */; };
+		3A8EC2B128AE639B00453419 /* CatFactsFetcher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A8644BE28ADF2AC0031A98E /* CatFactsFetcher.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
 		3A8644C828ADF2AC0031A98E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3A8644B528ADF2AC0031A98E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3A8644BD28ADF2AC0031A98E;
+			remoteInfo = CatFactsFetcher;
+		};
+		3A8EC2B228AE639B00453419 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3A8644B528ADF2AC0031A98E /* Project object */;
 			proxyType = 1;
@@ -43,6 +52,8 @@
 		3A8EC2A228AE390800453419 /* URLSessionHTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionHTTPClient.swift; sourceTree = "<group>"; };
 		3A8EC2A528AE41BA00453419 /* XCTest+MemoryLeaksTracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTest+MemoryLeaksTracking.swift"; sourceTree = "<group>"; };
 		3A8EC2A728AE41FF00453419 /* SharedTestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedTestHelpers.swift; sourceTree = "<group>"; };
+		3A8EC2AD28AE639B00453419 /* CatFactsFetcherEndToEndTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CatFactsFetcherEndToEndTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		3A8EC2AF28AE639B00453419 /* CatFactsFetcherEndToEndTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatFactsFetcherEndToEndTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +72,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		3A8EC2AA28AE639B00453419 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3A8EC2B128AE639B00453419 /* CatFactsFetcher.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -69,6 +88,7 @@
 			children = (
 				3A8644C028ADF2AC0031A98E /* CatFactsFetcher */,
 				3A8644CA28ADF2AC0031A98E /* CatFactsFetcherTests */,
+				3A8EC2AE28AE639B00453419 /* CatFactsFetcherEndToEndTests */,
 				3A8644BF28ADF2AC0031A98E /* Products */,
 			);
 			sourceTree = "<group>";
@@ -78,6 +98,7 @@
 			children = (
 				3A8644BE28ADF2AC0031A98E /* CatFactsFetcher.framework */,
 				3A8644C628ADF2AC0031A98E /* CatFactsFetcherTests.xctest */,
+				3A8EC2AD28AE639B00453419 /* CatFactsFetcherEndToEndTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -130,6 +151,14 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
+		3A8EC2AE28AE639B00453419 /* CatFactsFetcherEndToEndTests */ = {
+			isa = PBXGroup;
+			children = (
+				3A8EC2AF28AE639B00453419 /* CatFactsFetcherEndToEndTests.swift */,
+			);
+			path = CatFactsFetcherEndToEndTests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -179,6 +208,24 @@
 			productReference = 3A8644C628ADF2AC0031A98E /* CatFactsFetcherTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		3A8EC2AC28AE639B00453419 /* CatFactsFetcherEndToEndTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3A8EC2B428AE639B00453419 /* Build configuration list for PBXNativeTarget "CatFactsFetcherEndToEndTests" */;
+			buildPhases = (
+				3A8EC2A928AE639B00453419 /* Sources */,
+				3A8EC2AA28AE639B00453419 /* Frameworks */,
+				3A8EC2AB28AE639B00453419 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3A8EC2B328AE639B00453419 /* PBXTargetDependency */,
+			);
+			name = CatFactsFetcherEndToEndTests;
+			productName = CatFactsFetcherEndToEndTests;
+			productReference = 3A8EC2AD28AE639B00453419 /* CatFactsFetcherEndToEndTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -194,6 +241,9 @@
 						LastSwiftMigration = 1340;
 					};
 					3A8644C528ADF2AC0031A98E = {
+						CreatedOnToolsVersion = 13.4;
+					};
+					3A8EC2AC28AE639B00453419 = {
 						CreatedOnToolsVersion = 13.4;
 					};
 				};
@@ -213,6 +263,7 @@
 			targets = (
 				3A8644BD28ADF2AC0031A98E /* CatFactsFetcher */,
 				3A8644C528ADF2AC0031A98E /* CatFactsFetcherTests */,
+				3A8EC2AC28AE639B00453419 /* CatFactsFetcherEndToEndTests */,
 			);
 		};
 /* End PBXProject section */
@@ -226,6 +277,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		3A8644C428ADF2AC0031A98E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3A8EC2AB28AE639B00453419 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -259,6 +317,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		3A8EC2A928AE639B00453419 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3A8EC2B028AE639B00453419 /* CatFactsFetcherEndToEndTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -266,6 +332,11 @@
 			isa = PBXTargetDependency;
 			target = 3A8644BD28ADF2AC0031A98E /* CatFactsFetcher */;
 			targetProxy = 3A8644C828ADF2AC0031A98E /* PBXContainerItemProxy */;
+		};
+		3A8EC2B328AE639B00453419 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3A8644BD28ADF2AC0031A98E /* CatFactsFetcher */;
+			targetProxy = 3A8EC2B228AE639B00453419 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -480,6 +551,36 @@
 			};
 			name = Release;
 		};
+		3A8EC2B528AE639B00453419 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 836WWF38RW;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Lev-Litvak.CatFactsFetcherEndToEndTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		3A8EC2B628AE639B00453419 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 836WWF38RW;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Lev-Litvak.CatFactsFetcherEndToEndTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -506,6 +607,15 @@
 			buildConfigurations = (
 				3A8644D428ADF2AC0031A98E /* Debug */,
 				3A8644D528ADF2AC0031A98E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3A8EC2B428AE639B00453419 /* Build configuration list for PBXNativeTarget "CatFactsFetcherEndToEndTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3A8EC2B528AE639B00453419 /* Debug */,
+				3A8EC2B628AE639B00453419 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
