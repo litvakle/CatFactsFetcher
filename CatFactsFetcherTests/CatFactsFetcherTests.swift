@@ -64,6 +64,22 @@ class CatFactsFetcherTests: XCTestCase {
         })
     }
     
+    func test_fetch_doesNotDeliversResultAfterSUTInstanceHasBeenDeallocated() {
+        let client = HTTPClientSpy()
+        var sut: CatFactsNinjaFetcher? = CatFactsNinjaFetcher(client: client, url: anyURL())
+        
+        var receivedResult: CatFactsNinjaFetcher.Result?
+        
+        sut?.fetch { result in
+            receivedResult = result
+        }
+        
+        sut = nil
+        client.complete(withError: anyNSError())
+        
+        XCTAssertNil(receivedResult, "Expected not to fetch result")
+    }
+    
     // MARK: - Helpers
     private func makeSUT(url: URL = URL(string: "http://any-url.com")!) -> (sut: CatFactsNinjaFetcher, client: HTTPClientSpy) {
         let client = HTTPClientSpy()
@@ -107,6 +123,10 @@ class CatFactsFetcherTests: XCTestCase {
     
     private func anyNSError() -> NSError {
         return NSError(domain: "Any error", code: 0)
+    }
+    
+    private func anyURL() -> URL {
+        return URL(string: "http://any-url.com")!
     }
 }
 

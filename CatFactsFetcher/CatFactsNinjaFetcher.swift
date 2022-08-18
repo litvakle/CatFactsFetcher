@@ -30,7 +30,8 @@ public final class CatFactsNinjaFetcher {
     }
     
     public func fetch(_ completion: @escaping((Result) -> Void)) {
-        client.fetch(from: url) { result in
+        client.fetch(from: url) { [weak self] result in
+            guard self != nil else { return }
             switch result {
             case let .success((data, response)):
                 guard response.statusCode == 200 else {
