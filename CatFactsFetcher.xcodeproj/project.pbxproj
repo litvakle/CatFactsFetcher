@@ -17,6 +17,7 @@
 		3A8EC2A128AE352200453419 /* URLSessionHTTPClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8EC2A028AE352200453419 /* URLSessionHTTPClientTests.swift */; };
 		3A8EC2A328AE390800453419 /* URLSessionHTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8EC2A228AE390800453419 /* URLSessionHTTPClient.swift */; };
 		3A8EC2A628AE41BA00453419 /* XCTest+MemoryLeaksTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8EC2A528AE41BA00453419 /* XCTest+MemoryLeaksTracking.swift */; };
+		3A8EC2A828AE41FF00453419 /* SharedTestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8EC2A728AE41FF00453419 /* SharedTestHelpers.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,6 +42,7 @@
 		3A8EC2A028AE352200453419 /* URLSessionHTTPClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionHTTPClientTests.swift; sourceTree = "<group>"; };
 		3A8EC2A228AE390800453419 /* URLSessionHTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionHTTPClient.swift; sourceTree = "<group>"; };
 		3A8EC2A528AE41BA00453419 /* XCTest+MemoryLeaksTracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTest+MemoryLeaksTracking.swift"; sourceTree = "<group>"; };
+		3A8EC2A728AE41FF00453419 /* SharedTestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedTestHelpers.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,6 +125,7 @@
 			isa = PBXGroup;
 			children = (
 				3A8EC2A528AE41BA00453419 /* XCTest+MemoryLeaksTracking.swift */,
+				3A8EC2A728AE41FF00453419 /* SharedTestHelpers.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -249,6 +252,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A8EC2A828AE41FF00453419 /* SharedTestHelpers.swift in Sources */,
 				3A8644CC28ADF2AC0031A98E /* CatFactsFetcherTests.swift in Sources */,
 				3A8EC2A628AE41BA00453419 /* XCTest+MemoryLeaksTracking.swift in Sources */,
 				3A8EC2A128AE352200453419 /* URLSessionHTTPClientTests.swift in Sources */,
