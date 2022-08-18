@@ -18,9 +18,11 @@ public final class CatFactsNinjaFetcher: CatFactsFetcher {
 
     public typealias Result = CatFactsFetcher.Result
     
-    public init(client: HTTPClient, url: URL) {
+    private let defaultURL = URL(string: "https://catfact.ninja/fact")!
+    
+    public init(client: HTTPClient, url: URL?) {
         self.client = client
-        self.url = url
+        self.url = url ?? defaultURL
     }
     
     public func fetch(_ completion: @escaping((Result) -> Void)) {
