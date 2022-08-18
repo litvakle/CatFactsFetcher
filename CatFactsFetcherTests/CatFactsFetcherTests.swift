@@ -28,21 +28,9 @@ class CatFactsFetcherTests: XCTestCase {
     func test_fetch_deliversErrorOnClientError() {
         let (sut, client) = makeSUT()
         
-        let expectedError = NSError(domain: "any error", code: 1)
-        let exp = expectation(description: "Waiting for fetch completion")
-        sut.fetch { result in
-            switch result {
-            case .success:
-                XCTFail("Expected failure, received \(result) instead)")
-            case let .failure(error):
-                XCTAssertEqual(error, .connectivity)
-            }
-            exp.fulfill()
-        }
-        
-        client.complete(withError: expectedError)
-        
-        wait(for: [exp], timeout: 1.0)
+        expect(sut, toCompleteWith: .failure(.connectivity), when: {
+            client.complete(withError: anyNSError())
+        })
     }
     
     func test_fetch_deliversErrorOnNon200HTTPResponse() {
@@ -50,61 +38,30 @@ class CatFactsFetcherTests: XCTestCase {
         
         let statusCodes = [199, 201, 300, 400, 500]
         statusCodes.enumerated().forEach { (index, code) in
-            let exp = expectation(description: "Waiting for fetch completion")
-            sut.fetch { result in
-                switch result {
-                case .success:
-                    XCTFail("Expected failure, received \(result) instead)")
-                case let .failure(receivedError):
-                    XCTAssertEqual(receivedError, .invalidData)
-                }
-                exp.fulfill()
-            }
-            
-            client.complete(withStatusCode: code, data: Data(), at: index)
-            
-            wait(for: [exp], timeout: 1.0)
+            expect(sut, toCompleteWith: .failure(.invalidData), when: {
+                client.complete(withStatusCode: code, data: Data(), at: index)
+            })
         }
     }
     
     func test_fetch_deliversErrorOn200HTTPURLResponseWithInvalidData() {
         let (sut, client) = makeSUT()
         
-        let exp = expectation(description: "Waiting for fetch completion")
-        sut.fetch { result in
-            switch result {
-            case .success:
-                XCTFail("Expected failure, received \(result) instead)")
-            case let .failure(error):
-                XCTAssertEqual(error, .invalidData)
-            }
-            exp.fulfill()
-        }
-        
-        let invalidJSON = Data("invalid json".utf8)
-        client.complete(withStatusCode: 200, data: invalidJSON)
-        
-        wait(for: [exp], timeout: 1.0)
+        expect(sut, toCompleteWith: .failure(.invalidData), when: {
+            let invalidJSON = Data("invalid json".utf8)
+            client.complete(withStatusCode: 200, data: invalidJSON)
+        })
     }
+    
     
     func test_fetch_deliversFactOn200HTTPURLResponseWithValidData() {
         let (sut, client) = makeSUT()
-        
-        let exp = expectation(description: "Waiting for fetch completion")
+
         let expectedFact = makeFact(text: "Some cat fact")
-        sut.fetch { result in
-            switch result {
-            case let .success(receivedFact):
-                XCTAssertEqual(receivedFact, expectedFact.model)
-            case .failure:
-                XCTFail("Expected success, got \(result) instead")
-            }
-            exp.fulfill()
-        }
         
-        client.complete(withStatusCode: 200, data: expectedFact.data)
-        
-        wait(for: [exp], timeout: 1.0)
+        expect(sut, toCompleteWith: .success(expectedFact.model), when: {
+            client.complete(withStatusCode: 200, data: expectedFact.data)
+        })
     }
     
     // MARK: - Helpers
@@ -126,6 +83,30 @@ class CatFactsFetcherTests: XCTestCase {
         let data = try! JSONSerialization.data(withJSONObject: json)
         
         return (fact, data)
+    }
+    
+    private func expect(_ sut: CatFactsNinjaFetcher, toCompleteWith expectedResult: CatFactsNinjaFetcher.Result, when action: () -> Void, file: StaticString = #file, line: UInt = #line) {
+        let exp = expectation(description: "Waiting for fetch completion")
+        
+        sut.fetch { receivedResult in
+            switch (receivedResult, expectedResult) {
+            case let (.success(receivedFact), .success(expectedFact)):
+                XCTAssertEqual(receivedFact, expectedFact, file: file, line: line)
+            case let (.failure(receivedError), .failure(expectedError)):
+                XCTAssertEqual(receivedError, expectedError, file: file, line: line)
+            default:
+                XCTFail("Expected result \(expectedResult), got \(receivedResult) instead", file: file, line: line)
+            }
+            exp.fulfill()
+        }
+        
+        action()
+        
+        wait(for: [exp], timeout: 1.0)
+    }
+    
+    private func anyNSError() -> NSError {
+        return NSError(domain: "Any error", code: 0)
     }
 }
 
