@@ -17,7 +17,7 @@ public final class CatFactsNinjaFetcher {
     let client: HTTPClient
     let url: URL
     
-    public typealias Result = Swift.Result<Data, Error>
+    public typealias Result = Swift.Result<CatFact, Error>
 
     public enum Error: Swift.Error {
         case connectivity
@@ -38,20 +38,24 @@ public final class CatFactsNinjaFetcher {
                     return
                 }
                 
-                guard let _ = try? JSONDecoder().decode(ApiFact.self, from: data) else {
+                guard let decoded = try? JSONDecoder().decode(ApiFact.self, from: data) else {
                     completion(.failure(.invalidData))
                     return
                 }
                     
-                completion(.success(data))
+                completion(.success(decoded.toModel()))
             case .failure(_):
                 completion(.failure(.connectivity))
             }
         }
     }
+}
+
+private struct ApiFact: Decodable {
+    let fact: String
+    let length: Int
     
-    private struct ApiFact: Decodable {
-        let fact: String
-        let lenght: Int
+    func toModel() -> CatFact {
+        return CatFact(text: fact)
     }
 }

@@ -87,12 +87,45 @@ class CatFactsFetcherTests: XCTestCase {
         wait(for: [exp], timeout: 1.0)
     }
     
+    func test_fetch_deliversFactOn200HTTPURLResponseWithValidData() {
+        let (sut, client) = makeSUT()
+        
+        let exp = expectation(description: "Waiting for fetch completion")
+        let expectedFact = makeFact(text: "Some cat fact")
+        sut.fetch { result in
+            switch result {
+            case let .success(receivedFact):
+                XCTAssertEqual(receivedFact, expectedFact.model)
+            case .failure:
+                XCTFail("Expected success, got \(result) instead")
+            }
+            exp.fulfill()
+        }
+        
+        client.complete(withStatusCode: 200, data: expectedFact.data)
+        
+        wait(for: [exp], timeout: 1.0)
+    }
+    
     // MARK: - Helpers
     private func makeSUT(url: URL = URL(string: "http://any-url.com")!) -> (sut: CatFactsNinjaFetcher, client: HTTPClientSpy) {
         let client = HTTPClientSpy()
         let sut = CatFactsNinjaFetcher(client: client, url: url)
         
         return (sut, client)
+    }
+    
+    private func makeFact(text: String) -> (model: CatFact, data: Data) {
+        let fact = CatFact(text: text)
+        
+        let json = [
+            "fact": fact.text,
+            "length": fact.text.count
+        ].compactMapValues { $0 }
+        
+        let data = try! JSONSerialization.data(withJSONObject: json)
+        
+        return (fact, data)
     }
 }
 
@@ -117,6 +150,6 @@ private class HTTPClientSpy: HTTPClient {
             headerFields: nil
         )!
         
-        completions[index](.success((Data(), response)))
+        completions[index](.success((data, response)))
     }
 }
